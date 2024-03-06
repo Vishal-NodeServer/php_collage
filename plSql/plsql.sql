@@ -45,5 +45,7 @@ record employees%ROWTYPE;
 begin
 select * into record from employees
 where employees_id = 100;
-dbms_outpu
+dbms_output.put_line(record.first_name  || record.lastname);
+end;
+/
 
