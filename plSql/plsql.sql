@@ -208,5 +208,44 @@ declare
             dbms_output_PUT_line('Some eror found');
             END;
             / 
+
+
+--procedure is a sub program or a database object used to perform repeated execution
+
+CREATE OR REPLACE PROCEDURE test_procedure IS
+BEGIN
+  dbms_output.put_line('Test procedure executed successfully');
+  END;
+  /
+
+--to drop a procedure
+
+drop procedure procedure_name;
+
+--procedure with parameter 
+
+CREATE OR REPLACE PROCEDURE add_dept
+  (p_did IN departments.department_id%TYPE,
+   p_dname IN departments.department_name%TYPE,
+   p_mid IN departments.department_manager_id%TYPE,
+   p_lid IN departments.location_id%TYPE)
+IS
+BEGIN
+   INSERT INTO departments VALUES (p_did, p_dname, p_mid, p_lid);
+   DBMS_OUTPUT.PUT_LINE('Department added');
+END;
+/
+
+
+--for execute this (to pass the parameter)
+
+execute add_dept(102,Operation Department,Ahmedabad);
+
+--to display the compilation error in procedure just use
+
+SHOW ERRORS PROCEDURE ADD_DEPT;
+
+
+
     
     
