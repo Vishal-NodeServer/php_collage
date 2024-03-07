@@ -153,3 +153,60 @@ Clusor emp_cursor is
         UPDATE employees SET salary = salary + 10 where department_id = 50;
         END;
         /
+
+
+--Exception Handling (implicit predefined)
+
+declare
+  v_lastname employees.last_name%TYPE;
+  v_salary employees.salary%TYPE;
+
+  BEGIN
+  select last_name , salary 
+  INTO v_lastname , v_salary
+  from employees 
+  where employee_id = 300;
+
+  dbms_output.put_line(v_lastname || 'earns' || v_salary);
+ 
+ Exception
+      when NO_DATA_FOUND THEN
+           dbms_output.put_line('No records');
+    when TOO_MANY_ROWS THEN 
+        dbms_output_PUT_line('MOre than 1 record');
+        When other THEN 
+    dbms_output_PUT_line('some error found');
+
+  END;
+  /
+
+  --UserDefined Exception(Explicit Exception)
+
+  declare
+     v_lastname employees.last_name%TYPE;
+     v_salary employees.salary%TYPE;
+     e_invalid_dept Exception;  --treat as a Exception :-)
+
+     begin
+    upadate employees 
+    SET salary = salary + 200
+    WHERE department_id = 200;
+
+    IF SQL%NOTFOUND THEN  
+            RAISE e_invalid_dept;
+    END IF;
+    COMMIT;
+
+    Exception
+       when NO_DATA_FOUND THEN  
+           dbms_output.put_line('NO records');
+        WHEN TOO_MANY_ROWS THEN
+           dbms_output_PUT_line('More than 1 records found');
+        WHEN e_invalid_dept then 
+            dbms_output_PUT_line('not such departent EXists'); --This is my own Exception
+        When other THEN 
+            dbms_output_PUT_line('Some eror found');
+            END;
+            / 
+    
+    
