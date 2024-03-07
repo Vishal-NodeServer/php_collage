@@ -134,4 +134,22 @@ end;
                 CLOSE emp_cursor;
                 END;
                 /
-                
+
+
+--Advance Cursor 
+--ONE's update then not upadate after this execution
+-- in department_id = 50;
+--to release this lock just need to write a cmd 
+-- rollback  <--(This cmd is used to release the lock)
+
+declare 
+Clusor emp_cursor is
+            Select emloyee_id , lastname , salary 
+            from employees 
+            Where department_id = 50
+            for update of salary NOWAIT;
+
+            BEGIN
+        UPDATE employees SET salary = salary + 10 where department_id = 50;
+        END;
+        /
