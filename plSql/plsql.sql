@@ -99,3 +99,39 @@ dbms_output.put_line(result);
 END LOOP;
 end;
 /
+
+--Implicit cursor 
+
+ declare
+ cnt number(3);
+
+ begin
+  update employee set salary = salary + 2 where e_name = 'vijay';
+  cnt := SQL%RowCount;
+  dbms_output.put_line(cnt || 'updated row');
+  End;
+  /
+
+
+  --Cursor
+
+  declare
+
+  v_empno employees.employee_id%TYPE;
+  v_ename employee.lastname%TYPE;
+  Cursor emp_cursor is  
+            SELECT employee_id , lastname from employees;
+
+
+            begin
+
+            open emp_cursor;
+            LOOP
+                FETCH emp_cursor into v_empno , v_ename;
+                EXIT when emp_cursor%RowCount > 10 or emp_cursor%NOTFOUND;
+                dbms_output_PUT_line(v_empno || ': ' || v_ename);
+                END LOOp;
+                CLOSE emp_cursor;
+                END;
+                /
+                
