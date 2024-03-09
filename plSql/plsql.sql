@@ -467,7 +467,6 @@ end;
 /
 
 
-
 7. Write a function to display minimum salary of employee. 💰
 
 create or replace function minimums_salary_emp return number 
